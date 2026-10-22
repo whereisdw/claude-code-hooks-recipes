@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      { "matcher": "AskUserQuestion", "hooks": [ { "type": "command", "command": "~/.claude/hooks/answer-ask-user-question.sh" } ] }
+    ],
+    "Stop": [
+      { "matcher": "", "hooks": [ { "type": "command", "command": "~/.claude/hooks/stop-notify-macos.sh" } ] }
+    ],
+    "Notification": [
+      { "matcher": "", "hooks": [ { "type": "command", "command": "~/.claude/hooks/notify-phone-ntfy.sh" } ] }
+    ],
+    "SessionStart": [
+      { "matcher": "", "hooks": [ { "type": "command", "command": "~/.claude/hooks/keep-awake-while-session.sh" } ] }
+    ],
+    "SessionEnd": [
+      { "matcher": "", "hooks": [
+        { "type": "command", "command": "~/.claude/hooks/keep-awake-while-session.sh" },
+        { "type": "command", "command": "~/.claude/hooks/list-leftovers.sh" }
+      ] }
+    ]
+  }
+}
