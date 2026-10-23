@@ -9,6 +9,10 @@
 #   ⏺ User answered Claude's questions: · <question> → <label>
 # and continues without showing the prompt. Returning {"behavior":"allow"} WITHOUT updatedInput
 # does not answer the question; the session keeps waiting.
+#
+# WARNING: after Claude Code 2.1.300, PermissionRequest hooks validate updatedInput more strictly,
+# so this approach may no longer work. It has only been verified on 2.1.283. On newer versions,
+# look at a PreToolUse-based route instead.
 HOOK_INPUT=$(cat) python3 -c "
 import json, os, sys
 
