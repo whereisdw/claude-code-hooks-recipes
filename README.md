@@ -25,7 +25,7 @@ Hooks run with your user's permissions. Read a script before you install it.
 ## Notes from testing
 
 - **`allow` alone does not answer `AskUserQuestion`.** If an approval hook returns `{"behavior":"allow"}` without `updatedInput.answers`, the question stays open and the session keeps waiting. The answer has to be in `updatedInput` (see the first recipe and [this write-up](https://dev.to/dawonlee/you-can-answer-claude-codes-askuserquestion-from-a-hook-and-from-your-phone-1ddn)).
-- **Version warning for `answer-ask-user-question.sh`.** After Claude Code 2.1.300, `updatedInput` validation in `PermissionRequest` hooks is stricter, so this approach may not work. It has only been verified on 2.1.283. On newer versions, look at a `PreToolUse` route instead.
+- **Version warning for `answer-ask-user-question.sh`.** From Claude Code 2.1.300, `updatedInput` from `PreToolUse` and `PermissionRequest` hooks "is now validated like Claude's own input" ([CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md), 2.1.300), so this approach may not work. It has only been verified on 2.1.283. On newer versions, try the documented `PreToolUse` route: `permissionDecision: "allow"` plus `updatedInput.answers` (2.1.85+). The same validation applies there, so it is not a workaround; check that the answers you return are valid input.
 - A `PermissionRequest` hook blocks until it returns. If you want to answer from somewhere else (a phone, a menu bar app), the hook has to wait for that answer and give up before the hook timeout so the terminal prompt still works.
 - `caffeinate` only prevents idle sleep. Closing a MacBook's lid without an external display still sleeps it; that needs `pmset disablesleep` (and remembering to turn it back off).
 

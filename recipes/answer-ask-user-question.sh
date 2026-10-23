@@ -10,9 +10,11 @@
 # and continues without showing the prompt. Returning {"behavior":"allow"} WITHOUT updatedInput
 # does not answer the question; the session keeps waiting.
 #
-# WARNING: after Claude Code 2.1.300, PermissionRequest hooks validate updatedInput more strictly,
-# so this approach may no longer work. It has only been verified on 2.1.283. On newer versions,
-# look at a PreToolUse-based route instead.
+# WARNING: from Claude Code 2.1.300 on, updatedInput from PreToolUse and PermissionRequest hooks is
+# "validated like Claude's own input" (CHANGELOG 2.1.300), so this approach may no longer work.
+# It has only been verified on 2.1.283. On newer versions, try the documented PreToolUse route:
+# permissionDecision "allow" plus updatedInput.answers (CHANGELOG 2.1.85+). The same validation
+# applies there, so check that the answers you return are valid input for AskUserQuestion.
 HOOK_INPUT=$(cat) python3 -c "
 import json, os, sys
 
